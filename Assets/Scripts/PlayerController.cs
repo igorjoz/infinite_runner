@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float jumpForce;
-    public float liftingForce;
     public bool jumped;
     public bool doubleJumped;
 
-    public LayerMask whatIsGround;
+    public float jumpForce;
+    public float liftingForce;
+
     private Rigidbody2D rb;
     private float timestamp;
     private BoxCollider2D boxCollider2D;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public LayerMask whatIsGround;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         boxCollider2D = gameObject.GetComponent<BoxCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsGrounded() && Time.time >= timestamp)
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && rb.linearVelocity.y < 0)
+        if (Input.GetMouseButton(0) && rb.linearVelocity.y < 0)
         {
             rb.AddForce(new Vector2(0f, liftingForce * Time.deltaTime));
         }
@@ -55,13 +55,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(
-            boxCollider2D.bounds.center,
-            boxCollider2D.bounds.size,
-            0f,
-            Vector2.down,
-            0.1f,
-            whatIsGround);
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, 0.1f, whatIsGround);
 
         return hit.collider != null;
     }
