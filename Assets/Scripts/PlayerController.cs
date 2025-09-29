@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && rb.linearVelocity.y < 0)
+        if (Input.GetMouseButton(0) && rb.linearVelocity.y < 0) // GetMouseButton, BEZ DOWN
         {
             rb.AddForce(new Vector2(0f, liftingForce * Time.deltaTime));
         }
